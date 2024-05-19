@@ -1,20 +1,29 @@
 import "milligram";
 import './App.css';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import LoginForm from "./LoginForm";
 import UserPanel from "./UserPanel";
 
 function App() {
     const [loggedIn, setLoggedIn] = useState('');
 
+    useEffect(() => {
+        const username = localStorage.getItem("username")
+        if (username) {
+            setLoggedIn(username)
+        }
+    },[])
+
     function login(email) {
         if (email) {
             setLoggedIn(email);
+            localStorage.setItem("username", email)
         }
     }
 
     function logout() {
         setLoggedIn('');
+        localStorage.removeItem("username")
     }
 
     return (

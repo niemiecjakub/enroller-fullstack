@@ -98,8 +98,13 @@ public class MeetingRestController {
             return new ResponseEntity<String>("Unable to find participant login in the request body",
                     HttpStatus.BAD_REQUEST);
         }
-
+        System.out.println(login);
         Participant participantToAdd = participantService.findByLogin(login);
+        if (participantToAdd == null){
+            participantToAdd =  new Participant();
+            participantToAdd.setLogin(login);
+            participantToAdd.setPassword("password");
+        }
         currentMeeting.addParticipant(participantToAdd);
         meetingService.update(currentMeeting);
 
